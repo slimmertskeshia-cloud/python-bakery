@@ -1,0 +1,112 @@
+{# Inherit the site-wide layout from the main app #}
+{% extends 'main/base.html' %}
+
+{# Set the browser tab title dynamically using the flavor name #}
+{% block page_title %}Add Topping - {{ flavor.name|title }}{% endblock %}
+
+{% block content %}
+<div class="book-page shadow-sm">
+    {# Header Section: Introduces the action to the user #}
+    <div class="mb-5 border-bottom pb-4 text-center text-md-start">
+        <h1 class="display-5 fw-bold text-pink">Add a Topping</h1>
+        <p class="fs-5 text-muted">
+            {# The |title filter ensures the flavor name is capitalized correctly #}
+            Customize your <span class="fw-bold" style="color: #d63384;">{{ flavor.name|title }}</span> cake.
+        </p>
+    </div>
+
+    <div class="container p-0">
+        <div class="row">
+            {# Left Column: Contains the actual data entry form #}
+            <div class="col-md-7 col-lg-6">
+                {# The form action uses the 'main' namespace defined in urls.py #}
+                <form action="{% url 'main:add_topping' flavor.id %}" method="post" class="shadow-sm p-4 rounded-4 bg-white border">
+                    {# Security token required by Django for all POST requests #}
+                    {% csrf_token %}
+                    
+                    {# Renders the ToppingForm fields wrapped in <p> tags #}
+                    <div class="mb-4 custom-form-group">
+                        {{ form.as_p }}
+                    </div>
+                    
+                    {# Action Buttons: Submit the form or go back to the flavor detail page #}
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button name="submit" class="btn btn-pink px-5 py-2 shadow-sm">
+                            <i class="bi bi-plus-circle me-2"></i>Add Topping
+                        </button>
+                        <a href="{% url 'main:flavor_detail' flavor.id %}" class="btn btn-outline-secondary px-4 py-2">
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+            
+            {# Right Column: Decorative section hidden on small screens #}
+            <div class="col-md-5 d-none d-md-flex align-items-center justify-content-center">
+                <div class="text-center" style="opacity: 0.8;">
+                    <span style="font-size: 5rem; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));">🍓</span>
+                    <p class="text-muted fst-italic mt-3">"A cake without toppings is <br> just a bread with an identity crisis."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block extra_css %}
+<style>
+    /* CSS Variables for consistent pink branding across the app */
+    :root {
+        --dark-pink: #d63384;
+        --light-pink-bg: #fff0f5;
+        --border-pink: #f8bbd0;
+    }
+
+    .text-pink { color: var(--dark-pink) !important; }
+
+    /* Custom styling for the automatically generated Django form paragraphs */
+    .custom-form-group p {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Styling the input fields to match the 'pink' theme */
+    .custom-form-group input, 
+    .custom-form-group textarea {
+        display: block;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
+        background-color: #fff;
+        border: 2px solid var(--border-pink);
+        border-radius: 10px;
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    }
+
+    .custom-form-group input:focus {
+        border-color: var(--dark-pink);
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem rgba(214, 51, 132, 0.15);
+    }
+
+    /* Pink button styling */
+    .btn-pink {
+        background-color: var(--dark-pink) !important;
+        border-color: var(--dark-pink) !important;
+        color: white !important;
+        font-weight: 600;
+        border-radius: 8px;
+    }
+
+    .btn-pink:hover {
+        background-color: #bc2b73 !important;
+        transform: translateY(-1px);
+    }
+
+    .btn-outline-secondary {
+        border-radius: 8px;
+    }
+</style>
+{% endblock extra_css %}

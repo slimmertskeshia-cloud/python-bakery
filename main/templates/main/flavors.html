@@ -1,0 +1,123 @@
+{% extends 'main/base.html' %}
+
+{% block page_title %}Cake Menu{% endblock %}
+
+{% block content %}
+<div class="book-page shadow-sm">
+    <div class="mb-5 border-bottom pb-4 text-center text-md-start">
+        <h1 class="display-4 fw-bold text-pink">Cake Menu</h1>
+        <p class="fs-5 text-muted italic">Select a flavor to explore toppings or create a new masterpiece.</p>
+    </div>
+
+    <div class="container p-0">
+        <div class="list-group list-group-flush rounded-3 overflow-hidden">
+            {% for flavor in flavors %}
+                <li class="list-group-item d-flex justify-content-between align-items-center p-4 bg-transparent flavor-row">
+                    <div class="d-flex align-items-center">
+                        <span class="cake-icon me-3">🍰</span>
+                        <div>
+                            <h4 class="mb-0">
+                                <a href="{% url 'main:flavor_detail' flavor.id %}" class="text-decoration-none text-dark fw-bold hover-pink">
+                                    {{ flavor.name|title }}
+                                </a>
+                            </h4>
+                            <small class="text-muted">
+                                <i class="bi bi-clock-history"></i> Added {{ flavor.date_added|timesince }} ago
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group shadow-sm">
+                        <a href="{% url 'main:flavor_detail' flavor.id %}" class="btn btn-outline-pink btn-sm px-4">
+                            View Toppings
+                        </a>
+                        <a href="{% url 'main:add_topping' flavor.id %}" class="btn btn-pink btn-sm px-4">
+                            + Topping
+                        </a>
+                    </div>
+                </li>
+            {% empty %}
+                <div class="text-center py-5 border rounded-3 bg-light-pink">
+                    <p class="text-muted fs-5">Your bakery is currently empty!</p>
+                    <a href="{% url 'main:new_flavor' %}" class="btn btn-pink px-4">Bake Your First Cake</a>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="mt-5 pt-3 text-center">
+            <a href="{% url 'main:new_flavor' %}" class="btn btn-lg btn-pink shadow px-5 py-3 rounded-pill">
+                <span class="me-2">✨</span> Add a New Flavor
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block extra_css %}
+<style>
+    /* Global Pink Variables */
+    :root {
+        --dark-pink: #d63384;
+        --accent-pink: #f8bbd0;
+        --light-pink-bg: #fff0f5;
+    }
+
+    .text-pink { color: var(--dark-pink) !important; }
+    .bg-light-pink { background-color: var(--light-pink-bg); }
+
+    /* Row Styling */
+    .flavor-row {
+        border-bottom: 2px dashed var(--accent-pink) !important;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .flavor-row:hover {
+        background-color: rgba(255, 240, 245, 0.5) !important;
+        transform: translateX(5px);
+    }
+
+    /* Cake Icon Animation */
+    .cake-icon {
+        font-size: 2rem;
+        display: inline-block;
+        transition: transform 0.3s ease;
+    }
+
+    .flavor-row:hover .cake-icon {
+        transform: rotate(15deg) scale(1.2);
+    }
+
+    /* Link Hover */
+    .hover-pink:hover {
+        color: var(--dark-pink) !important;
+    }
+
+    /* Button Styles */
+    .btn-pink {
+        background-color: var(--dark-pink) !important;
+        border-color: var(--dark-pink) !important;
+        color: white !important;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    .btn-pink:hover {
+        background-color: #bc2b73 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .btn-outline-pink {
+        color: var(--dark-pink) !important;
+        border-color: var(--dark-pink) !important;
+        background-color: white;
+    }
+
+    .btn-outline-pink:hover {
+        background-color: var(--dark-pink) !important;
+        color: white !important;
+    }
+
+    .italic { font-style: italic; }
+</style>
+{% endblock extra_css %}

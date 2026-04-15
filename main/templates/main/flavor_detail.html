@@ -1,0 +1,121 @@
+{# Inherit from the main layout #}
+{% extends 'main/base.html' %}
+
+{% block page_title %}{{ flavor.name|title }}{% endblock %}
+
+{% block content %}
+<div class="book-page shadow-sm">
+    {# Breadcrumb navigation back to the full list #}
+    <nav aria-label="breadcrumb" class="mb-4">
+        <a href="{% url 'main:flavors' %}" class="text-decoration-none text-muted hover-pink">
+            <i class="bi bi-arrow-left"></i> Back to Cake Menu
+        </a>
+    </nav>
+
+    {# Header section for the specific flavor #}
+    <div class="mb-5 border-bottom pb-4">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h1 class="display-4 fw-bold text-pink">{{ flavor.name|title }}</h1>
+                <p class="fs-5 text-muted">A selection of delicious toppings for this cake base.</p>
+            </div>
+            <span style="font-size: 4rem;">🧁</span>
+        </div>
+    </div>
+
+    <div class="container p-0">
+        <h3 class="mb-4 text-secondary">Toppings</h3>
+        <ul class="list-group list-group-flush rounded-3">
+            {% for topping in toppings %}
+                {# Individual topping card #}
+                <li class="list-group-item p-4 bg-transparent topping-row" 
+                    style="border-left: 5px solid var(--dark-pink); background-color: white !important;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        {# FIX: Changed topping.text to topping.name to match your model fields #}
+                        <span class="fs-5 fw-bold text-dark">{{ topping.name }}</span>
+                        <small class="text-muted italic">{{ topping.date_added|date:"M d, Y" }}</small>
+                    </div>
+                </li>
+            {% empty %}
+                {# State shown if the flavor has no toppings yet #}
+                <div class="text-center py-5 border rounded-3 bg-light-pink">
+                    <p class="text-muted fs-5">No toppings added for this flavor yet!</p>
+                    <a href="{% url 'main:add_topping' flavor.id %}" class="btn btn-pink">+ Add First Topping</a>
+                </div>
+            {% endfor %}
+        </ul>
+
+        {# Action Buttons #}
+        <div class="mt-5 text-center d-flex justify-content-center gap-3">
+            <a href="{% url 'main:add_topping' flavor.id %}" class="btn btn-pink btn-lg px-4 shadow-sm">
+                Add New Topping
+            </a>
+            <a href="{% url 'main:edit_flavor' flavor.id %}" class="btn btn-outline-pink btn-lg px-4 shadow-sm">
+                Edit Flavor Name
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --dark-pink: #d63384;
+        --accent-pink: #f8bbd0;
+        --light-pink-bg: #fff0f5;
+    }
+
+    .text-pink { color: var(--dark-pink) !important; }
+    .bg-light-pink { background-color: var(--light-pink-bg); }
+
+    .topping-row {
+        transition: all 0.2s ease-in-out;
+        margin-bottom: 12px;
+        border-radius: 12px !important;
+        border: 1px solid #eee !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    /* Subtle lift effect when hovering over a topping */
+    .topping-row:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(214, 51, 132, 0.15);
+        border-color: var(--accent-pink) !important;
+    }
+
+    .hover-pink:hover {
+        color: var(--dark-pink) !important;
+    }
+
+    .btn-pink {
+        background-color: var(--dark-pink) !important;
+        border-color: var(--dark-pink) !important;
+        color: white !important;
+        font-weight: 600;
+    }
+
+    .btn-pink:hover {
+        background-color: #bc2b73 !important;
+        transform: scale(1.02);
+    }
+
+    .btn-outline-pink {
+        color: var(--dark-pink) !important;
+        border-color: var(--dark-pink) !important;
+        background: transparent;
+    }
+
+    .btn-outline-pink:hover {
+        background-color: var(--dark-pink) !important;
+        color: white !important;
+    }
+
+    .italic { font-style: italic; }
+    
+    /* Ensures text is definitely dark enough to see against the white background */
+    .text-dark {
+        color: #2d3436 !important;
+    }
+</style>
+{% endblock extra_css %}

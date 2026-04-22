@@ -1,0 +1,192 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block page_title %}Welcome to the Cake Corner{% endblock %}
+
+{% block extra_css %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Handlee&family=Lily+Script+One&display=swap" rel="stylesheet">
+
+<style>
+    /* Book-like aesthetics with a sweet pink twist */
+    body {
+        background-color: #ffe0e9; /* Soft pink background */
+        font-family: 'Handlee', cursive; /* Casual, friendly font */
+        display: flex;
+        justify-content: center;
+        padding: 50px 20px;
+        color: #5d4a4a; /* Warm brown-ish text, less harsh than black */
+        line-height: 1.6;
+    }
+
+    .book-page {
+        background-color: #fffdf9; /* Warm cream paper color */
+        width: 100%;
+        max-width: 650px;
+        padding: 60px;
+        box-shadow: 10px 10px 30px rgba(0,0,0,0.05); /* Softer shadow */
+        border: 2px solid #ffccd8; /* Pink bordered page */
+        border-radius: 15px; /* Rounded corners for softness */
+        min-height: 80vh;
+        position: relative;
+    }
+
+    /* The Main Title */
+    h1 {
+        text-align: center;
+        font-family: 'Lily Script One', cursive; /* Fancy title font */
+        color: #d15671; /* Strong pink for headings */
+        border-bottom: 2px solid #ffccd8;
+        padding-bottom: 15px;
+        letter-spacing: 1px;
+        margin-bottom: 45px;
+        position: relative;
+    }
+
+    /* Add little cake decorations to the sides of the title */
+    h1::before { content: '🎂 '; }
+    h1::after { content: ' 🧁'; }
+
+    h2 {
+        color: #d15671;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    /* The 'Drawing' Section */
+    .cake-drawings {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        font-size: 4rem; /* Big, cute emojis */
+        margin-bottom: 40px;
+        padding: 20px 0;
+        background-color: #fff;
+        border-radius: 10px;
+        border: 1px dotted #ffccd8;
+    }
+
+    /* List styling - adapted from ledger */
+    ul {
+        list-style-type: none;
+        padding: 0 20px; /* Indent the list from the paper edge */
+    }
+
+    li {
+        padding: 18px 0;
+        border-bottom: 2px dotted #ffccd8; /* Dotted pink lines */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    li:last-child {
+        border-bottom: none;
+    }
+
+    .action-icon {
+        font-size: 1.5em; /* Make the action icons big */
+    }
+
+    /* Links - pink and sweet */
+    a {
+        color: #ff85a2; /* Fun pink link */
+        text-decoration: none;
+        border-bottom: 1px solid #ffccd8;
+        transition: all 0.2s ease;
+    }
+
+    a:hover {
+        color: #d15671; /* Darker pink on hover */
+        border-bottom: 2px solid #d15671;
+    }
+
+    /* The 'Next Step' button */
+    .get-started {
+        display: block;
+        width: 250px;
+        margin: 50px auto;
+        text-align: center;
+        padding: 15px;
+        background-color: #d15671;
+        color: white;
+        border-radius: 25px;
+        font-size: 1.2rem;
+        box-shadow: 2px 5px 10px rgba(209, 86, 113, 0.3);
+    }
+
+    .get-started:hover {
+        background-color: #ff85a2;
+        color: #5d4a4a;
+        transform: translateY(-2px);
+    }
+
+    .footer {
+        margin-top: 50px;
+        text-align: center;
+        font-style: italic;
+        font-size: 0.95em;
+        color: #998c8c;
+    }
+    
+    .footer hr {
+        border-top: 1px dotted #ffccd8;
+    }
+
+    /* The cute notebook margin lines */
+    .book-page::before {
+        content: '';
+        position: absolute;
+        left: 45px; /* Aligned with left edge */
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background-color: rgba(255, 133, 162, 0.2); /* Soft pink vertical line */
+    }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+    <div class="book-page">
+        <h1>Welcome to the Cake Toppings Hub</h1>
+
+        <h2>What's baking in your kitchen? 🍒</h2>
+
+        <div class="cake-drawings">
+            <span>🍰</span>
+            <span>✨</span>
+            <span>🧁</span>
+            <span>✨</span>
+            <span>🎂</span>
+        </div>
+
+        <p style="text-align: center; font-size: 1.1rem; padding: 0 40px;">
+            This is your personal baking journal! Use these pages to track your favorite cake bases and discover the perfect topping combinations.
+        </p>
+        
+        <p style="text-align: center; color: #ff85a2;">* * *</p>
+
+        <ul>
+            <li>
+                <span>🎂 Create a New Cake Flavor</span>
+                <a href="{% url 'main:new_flavor' %}" class="action-icon">➕</a>
+            </li>
+            <li>
+                <span>📋 View & Manage Your Cakes</span>
+                <a href="{% url 'main:flavors' %}" class="action-icon">🔎</a>
+            </li>
+            <li>
+                <span>🍒 Discover New Toppings</span>
+                <a href="#" class="action-icon">🌟</a>
+            </li>
+        </ul>
+        
+        <a href="{% url 'main:flavors' %}" class="get-started">View My Cake List</a>
+
+        <div class="footer">
+            <hr>
+            <a href="{% url 'admin:index' %}">Access the Pastry Chef Admin Panel</a>
+        </div>
+    </div>
+{% endblock content %}

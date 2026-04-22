@@ -1,0 +1,54 @@
+/* 1. Root Variables: Change these to change your whole site's theme */
+:root {
+    --primary-color: #f110c4;
+    --accent-color: #ff36de;
+    --background-gray: #ee32bf;
+    --text-dark: #333333;
+}
+
+/* 2. General Body Styles */
+body {
+    background-color: var(--background-gray);
+    color: var(--text-dark);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* 3. Customizing the Navbar (if not using Bootstrap defaults) */
+.navbar {
+    border-bottom: 3px solid var(--accent-color);
+}
+
+/* 4. Formatting the Main Content Area */
+main {
+    min-height: 80vh; /* Keeps footer at the bottom on short pages */
+    padding-top: 20px;
+}
+
+/* 5. Custom Button Styles */
+.btn-custom {
+    background-color: var(--primary-color);
+    color: pink;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.btn-custom:hover {
+    background-color:pink 
+}
+
+/* 6. Form Styling (Django forms can be tricky to style) */
+form p {
+    margin-bottom: 15px;
+}
+
+input[type="text"], input[type="email"], textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #f7296e;
+    border-radius: 4px;
+}

@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block page_title %}The Cake Toppings Hub{% endblock %}</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Lily+Script+One&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-pink: #d63384;
+            --soft-pink: #fff0f5;
+            --paper-white: #ffffff;
+        }
+
+        body {
+            background-color: #212529; /* Keep the dark outer background if you like the contrast */
+            font-family: 'Lora', serif; /* Serif font for a book feel */
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* The "Book Page" Container */
+        .book-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: var(--paper-white);
+            min-height: 80vh;
+            padding: 60px;
+            border-radius: 5px;
+            position: relative;
+            box-shadow: 10px 10px 20px rgba(0,0,0,0.5);
+            border-left: 20px solid var(--primary-pink); /* The "Spine" of the book */
+        }
+
+        h1, h2 {
+            font-family: 'Lily Script One', cursive;
+            color: var(--primary-pink);
+        }
+
+        p, li {
+            font-family: 'Handlee', cursive;
+            font-size: 1.2rem;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        a {
+            color: var(--primary-pink);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--primary-pink);
+        }
+
+        a:hover {
+            color: #bc2b73;
+            border-bottom: 1px solid #bc2b73;
+        }
+
+        .pink-header {
+            background-color: var(--primary-pink);
+            height: 10px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="pink-header"></div>
+
+    <div class="book-container">
+        <nav>
+            <a href="{% url 'main:index' %}">Home</a>
+        </nav>
+        
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+
+        {% block content %}
+            {% endblock %}
+    </div>
+</body>
+</html>

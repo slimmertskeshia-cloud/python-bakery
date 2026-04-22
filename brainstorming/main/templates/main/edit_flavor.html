@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="book-page shadow-sm">
+    <h2 class="text-pink">Edit Flavor: {{ flavor.name }}</h2>
+
+    <form action="{% url 'main:edit_flavor' flavor.id %}" method="post" class="mt-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="mt-4">
+            <button name="submit" class="btn btn-pink px-4">Save Changes</button>
+            <a href="{% url 'main:flavor_detail' flavor.id %}" class="btn btn-outline-secondary ms-2">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<style>
+    .text-pink { color: #d63384 !important; }
+    .btn-pink { background-color: #d63384 !important; border-color: #d63384 !important; color: white !important; }
+</style>
+{% endblock content %}

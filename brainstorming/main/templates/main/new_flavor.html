@@ -1,0 +1,32 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+  <div class="book-page">
+    <h2 class="text-pink">Add a New Cake Flavor</h2>
+    <form action="{% url 'main:new_flavor' %}" method='post'>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button name="submit" class="btn btn-primary">Add Flavor</button>
+    </form>
+  </div>
+{% endblock content %}
+
+{% block extra_css %}
+<style>
+    /* Custom style for the flavor form */
+    input[type="text"], select, textarea {
+        border: 2px solid var(--cake-pink);
+        border-radius: 8px;
+        padding: 10px;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .btn-primary {
+        background-color: var(--dark-pink) !important;
+        border: none !important;
+        padding: 10px 20px;
+        font-weight: 600;
+    }
+</style>
+{% endblock extra_css %}

@@ -4,8 +4,8 @@ from . import views
 app_name = 'main'
 
 urlpatterns = [
-    # Home page - The Pink Welcome Page
-    path('', views.index, name='home'),
+    # Changed name from 'home' to 'index' to match {% url 'main:index' %} in your base.html
+    path('', views.index, name='index'), 
     
     # Page that shows all cake flavors
     path('flavors/', views.flavors, name='flavors'),
@@ -20,6 +20,5 @@ urlpatterns = [
     path('add_topping/<int:flavor_id>/', views.add_topping, name='add_topping'),
 
     # Page for editing an existing cake flavor name
-    # This matches the 'main:edit_flavor' tag in your flavor_detail.html
     path('edit_flavor/<int:flavor_id>/', views.edit_flavor, name='edit_flavor'),
 ]

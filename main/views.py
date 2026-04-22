@@ -11,6 +11,7 @@ def index(request):
 @login_required
 def flavors(request):
     """Show all cake flavors for the logged-in user."""
+    # Filter flavors so users only see their own cakes
     flavors = CakeFlavor.objects.filter(owner=request.user).order_by('name')
     context = {'flavors': flavors}
     return render(request, 'main/flavors.html', context)
@@ -20,6 +21,7 @@ def flavor_detail(request, flavor_id):
     """Show a single flavor and all its toppings."""
     flavor = get_object_or_404(CakeFlavor, id=flavor_id)
     
+    # Security check: Ensure the flavor belongs to the current user
     if flavor.owner != request.user:
         raise Http404
         
@@ -31,14 +33,16 @@ def flavor_detail(request, flavor_id):
 def new_flavor(request):
     """Add a new cake flavor."""
     if request.method != 'POST':
+        # No data submitted; create a blank form
         form = FlavorForm()
     else:
+        # POST data submitted; process data
         form = FlavorForm(data=request.POST)
         if form.is_valid():
             new_cake = form.save(commit=False)
             new_cake.owner = request.user
             new_cake.save()
-            return redirect('main:flavors')
+            return redirect('main:flavors') # Ensure 'main' matches your app namespace
             
     context = {'form': form}
     return render(request, 'main/new_flavor.html', context)
